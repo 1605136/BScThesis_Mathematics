@@ -1,2 +1,2 @@
 # BScThesis_Mathematics
-Data and codes for the modelling and analysis of Energy Hubs
+Data and code for the stochastic modelling and analysis of Energy Hubs

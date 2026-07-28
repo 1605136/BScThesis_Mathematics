@@ -18,9 +18,12 @@ The modules contained in this directory are imported by the scripts in `run/`, `
 
 The functions contained in this directory read information from the `data/` directory, including:
 
-* Model parameters. --- "params.xlsx"
-* Historical datasets. --- "historical_data.csv"
-* Generated stochastic scenarios. --- "scenarios_*.csv"
+| Input file | Description |
+|------------|-------------|
+| `params.xlsx` | Technical, economic and operational parameters of the Energy Hub models. |
+| `historical_data.csv` | Historical time-series data (e.g., demand, renewable generation and market information). |
+| `scenarios_*.csv` | Representative stochastic scenarios generated from the historical data and used in the stochastic optimization models. |
+
 
 The exact input files required by each function are documented within the corresponding source code.
 

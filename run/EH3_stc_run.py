@@ -14,7 +14,7 @@ import pyomo.environ as pyo
 from pathlib import Path
 import sys
 
-ROOT = Path(r"C:\Users\Miriam Ucendo\Documents\UNI\5\TFG_mates\1605136_BSc_Math\run\EH3_stc_run.py").resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[1
 sys.path.insert(0, str(ROOT))
 
 

@@ -12,13 +12,19 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from pathlib import Path
-from input_data import load_input_data
+import sys
+
+ROOT = Path(r"C:\Users\Miriam Ucendo\Documents\UNI\5\TFG_mates\1605136_BSc_Math\plots\plot_compare_EH.py").resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from src.input_data import load_input_data
 
 # =============================================================================
 # CONFIGURATION
 # =============================================================================
 
-study_day = "2026-05-21"
+RESULTS_PATH = ROOT / "outputs"
+study_day = RESULTS_PATH / "2026-05-21"
 
 output_folder = study_day
 
@@ -30,13 +36,13 @@ if not os.path.exists(output_folder):
 # LOAD RESULTS
 # =============================================================================
 
-EH1 = pd.read_excel(f"EH1_stc_results_{study_day}.xlsx", sheet_name="results")
-EH2 = pd.read_excel(f"EH2_stc_results_{study_day}.xlsx", sheet_name="results")
-EH3 = pd.read_excel(f"EH3_stc_results_{study_day}.xlsx", sheet_name="results")
+EH1 = pd.read_excel(RESULTS_PATH / f"EH1_stc_results_{study_day}.xlsx", sheet_name="results")
+EH2 = pd.read_excel(RESULTS_PATH / f"EH2_stc_results_{study_day}.xlsx", sheet_name="results")
+EH3 = pd.read_excel(RESULTS_PATH / f"EH3_stc_results_{study_day}.xlsx", sheet_name="results")
 
-EH1_first = pd.read_excel(f"EH1_stc_results_{study_day}.xlsx", sheet_name="first_stage")
-EH2_first = pd.read_excel(f"EH2_stc_results_{study_day}.xlsx", sheet_name="first_stage")
-EH3_first = pd.read_excel(f"EH3_stc_results_{study_day}.xlsx", sheet_name="first_stage")
+EH1_first = pd.read_excel(RESULTS_PATH / f"EH1_stc_results_{study_day}.xlsx", sheet_name="first_stage")
+EH2_first = pd.read_excel(RESULTS_PATH / f"EH2_stc_results_{study_day}.xlsx", sheet_name="first_stage")
+EH3_first = pd.read_excel(RESULTS_PATH / f"EH3_stc_results_{study_day}.xlsx", sheet_name="first_stage")
 
 SCENARIOS = sorted(EH1["scenario"].unique())
 
@@ -44,11 +50,9 @@ SCENARIOS = sorted(EH1["scenario"].unique())
 # LOAD SCENARIO PROBABILITIES
 # =============================================================================
 
-ROOT = Path(r"C:\Users\Miriam Ucendo\Documents\UNI\5\TFG_mates\code\EH2_mod\nuevo\data")
-
-historical_file = ROOT / "processed" / "historical_data.csv"
-scenarios_file  = ROOT / "processed" / "scenarios_12.csv"
-params_file     = ROOT / "processed" / "params.xlsx"
+historical_file = ROOT / "data" / "processed" / "historical_data.csv"
+scenarios_file = ROOT / "data" / "processed" / "scenarios_12.csv"
+params_file = ROOT / "data" / "processed" / "params.xlsx"
 
 SCENARIOS_DATA, SCENARIOS_DATES, time_periods, PARAMS, PROB, DATA = load_input_data(
     params_file,

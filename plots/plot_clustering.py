@@ -20,7 +20,7 @@ import tsam.timeseriesaggregation as tsam
 
 N_SCENARIOS = 12
 
-ROOT = Path(r"C:\Users\Miriam Ucendo\Documents\UNI\5\TFG_mates\code\EH2_mod\nuevo\data")
+ROOT = Path(r"C:\Users\Miriam Ucendo\Documents\UNI\5\TFG_mates\1605136_BSc_Math\data")
 
 INPUT = ROOT / "processed" / "historical_data.csv"
 

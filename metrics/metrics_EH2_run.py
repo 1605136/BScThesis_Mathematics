@@ -15,16 +15,20 @@ import pyomo.environ as pyo
 import pandas as pd
 from pathlib import Path
 from datetime import date
+import sys
+
+ROOT = Path(r"C:\Users\Miriam Ucendo\Documents\UNI\5\TFG_mates\1605136_BSc_Math\metrics\metrics_EH2_run.py").resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 
 # 1. IMPORTAMOS los componentes desde nuestros otros dos archivos independientes
-from input_data import load_input_data
-from models import EH2_model, EH2_stc_model
+from src.input_data import load_input_data
+from src.models import EH2_model, EH2_stc_model
 
 # =====================================================================
 # CONFIGURATION
 # =====================================================================
 
-ROOT = Path(r"C:\Users\Miriam Ucendo\Documents\UNI\5\TFG_mates\code\EH2_mod\nuevo\data")
+ROOT = Path(r"C:\Users\Miriam Ucendo\Documents\UNI\5\TFG_mates\1605136_BSc_Math\data")
 
 historical_file = ROOT / "processed" / "historical_data.csv"
 scenarios_file  = ROOT / "processed" / "scenarios_12.csv"
@@ -35,7 +39,7 @@ study_day = "2026-05-20"
 study_day = pd.to_datetime(study_day).date()
 
 # Solver set
-solver = pyo.SolverFactory("cplex")
+solver = pyo.SolverFactory("glpk")
 
 # =====================================================================
 # LOAD DATA
@@ -78,6 +82,9 @@ for s in SCENARIOS:
     )
 
     result = solver.solve(model_ws)
+    
+    print(result.solver.status)
+    print(result.solver.termination_condition)
 
     WS += PROB[s] * pyo.value(model_ws.cost)
     

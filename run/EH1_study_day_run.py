@@ -15,21 +15,24 @@ import numpy as np
 import pandas as pd
 import pyomo.environ as pyo
 from pathlib import Path
+import sys
+
+ROOT = Path(r"C:\Users\Miriam Ucendo\Documents\UNI\5\TFG_mates\1605136_BSc_Math\run\EH1_study_day_run.py").resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
 
 # Import
-from input_data import load_input_data
-from models import EH1_model
+from src.input_data import load_input_data
+from src.models import EH1_model
 
 # =====================================================================
 # CONFIGURACIÓN
 # =====================================================================
 
-# Entrada
-ROOT = Path(r"C:\Users\Miriam Ucendo\Documents\UNI\5\TFG_mates\code\EH2_mod\nuevo\data")
-
-historical_file = ROOT / "processed" / "historical_data.csv"
-scenarios_file = ROOT / "processed" / "scenarios_12.csv"
-params_file = ROOT / "processed" / "params.xlsx"
+# Archivos de entrada
+historical_file = ROOT / "data" / "processed" / "historical_data.csv"
+scenarios_file = ROOT / "data" / "processed" / "scenarios_12.csv"
+params_file = ROOT / "data" / "processed" / "params.xlsx"
 
 study_day = "2026-05-20"
 study_day = pd.to_datetime(study_day).date()
@@ -39,7 +42,9 @@ optimal_sol = []
 dual_records = []
 
 # Archivo Excel donde guardaremos los resultados finales
-output_file = f"EH1_PFI_results_{study_day}.xlsx"
+OUTPUT_PATH = ROOT / "outputs"
+OUTPUT_PATH.mkdir(exist_ok=True)
+output_file = OUTPUT_PATH / f"EH1_PFI_results_{study_day}.xlsx"
 
 # Limpieza previa del archivo de salida si ya existe
 if os.path.exists(output_file):

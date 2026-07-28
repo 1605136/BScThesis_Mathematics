@@ -37,7 +37,7 @@ The modules are intended to be imported rather than executed directly. Typical u
 
 ```python
 from src.input_data import load_input_data
-from src.models import EH1_model
+from src.models import *_model
 ```
 
 ## Notes

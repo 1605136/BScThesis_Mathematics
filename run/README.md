@@ -38,27 +38,6 @@ Generated files include:
 - First-stage and second-stage decision variables.
 - Scenario-dependent results for stochastic models.
 
-## Usage
-
-The scripts are intended to be executed from the repository root.
-
-Example:
-
-```bash
-python run/EH1_run.py
-```
-
-The required input data and model configuration parameters are loaded automatically from the repository structure.
-
-## Execution workflow
-
-The typical workflow is:
-
-1. Prepare the required input data in `data/`.
-2. Execute the desired optimization model from this directory.
-3. Results are automatically stored in `outputs/`.
-4. Use the scripts in `metrics/` and `plots/` for further analysis and visualization.
-
 ## Notes
 
 The scripts in this directory are the main entry points for reproducing the optimization experiments presented in the thesis. The mathematical formulation of the models is implemented separately in `src/models.py`.

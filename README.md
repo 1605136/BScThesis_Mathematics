@@ -85,3 +85,9 @@ The repository can be reproduced by:
 ## Software
 
 The models have been developed in **Python** using **Pyomo** as the optimization modelling framework. Data processing is performed with **pandas**, representative scenarios are generated using **TSAM** (Time Series Aggregation Module), and **Matplotlib** is used for visualization.  
+
+## Solver
+
+All optimization models are implemented in **Pyomo** and solved using the **GLPK** (GNU Linear Programming Kit) solver.
+
+Before running the execution scripts, ensure that GLPK is installed and accessible from your Python environment.

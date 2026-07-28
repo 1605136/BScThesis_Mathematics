@@ -42,62 +42,35 @@ Generated files include:
 
 The scripts in this directory are the main entry points for reproducing the optimization experiments presented in the thesis. The mathematical formulation of the models is implemented separately in `src/models.py`.
 
-## User configuration
+## User-configurable parameters
 
-Before running any script, the user should verify the repository path and the selected study day.
+Before executing any script, the user may modify the following parameters.
 
 ### Repository path
 
-The scripts automatically locate the repository root using `Path(__file__)`:
+Specify the location of the script on your computer:
 
 ```python
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(r"C:\Users\Username\Documents\BScThesis_Mathematics\run\EH1_run.py").resolve().parents[1]
 ```
 
-This line should be kept unchanged in the standard repository structure.
-
-If the user stores the scripts in a different directory structure, the value of `ROOT` must be modified to point to the repository root directory.
-
-For example:
-
-```python
-ROOT = Path(r"path/to/your/repository").resolve()
-```
-
-The repository root is the main folder containing the directories:
-
-```text
-data/
-src/
-run/
-metrics/
-plots/
-outputs/
-```
+Replace the path with the location of the corresponding script on your machine.
 
 ### Study day
 
-The selected study day is defined through the variable:
+Select the day to be analysed:
 
 ```python
 study_day = "2026-05-20"
 ```
 
-This variable determines the input data and the name of the generated output files.
-
-The required format is:
+The required date format is:
 
 ```text
 YYYY-MM-DD
 ```
 
-where:
-
-- `YYYY` corresponds to the year.
-- `MM` corresponds to the month.
-- `DD` corresponds to the day.
-
-Example:
+For example:
 
 ```python
 study_day = "2026-05-20"

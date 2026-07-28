@@ -18,9 +18,9 @@ The modules contained in this directory are imported by the scripts in `run/`, `
 
 The functions contained in this directory read information from the `data/` directory, including:
 
-* Model parameters.
-* Historical datasets.
-* Generated stochastic scenarios.
+* Model parameters. --- "params.xlsx"
+* Historical datasets. --- "historical_data.csv"
+* Generated stochastic scenarios. --- "scenarios_*.csv"
 
 The exact input files required by each function are documented within the corresponding source code.
 

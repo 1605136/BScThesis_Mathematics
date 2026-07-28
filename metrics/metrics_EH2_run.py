@@ -17,7 +17,7 @@ from pathlib import Path
 from datetime import date
 import sys
 
-ROOT = Path(r"C:\Users\Miriam Ucendo\Documents\UNI\5\TFG_mates\1605136_BSc_Math\metrics\metrics_EH2_run.py").resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 # 1. IMPORTAMOS los componentes desde nuestros otros dos archivos independientes
@@ -28,11 +28,9 @@ from src.models import EH2_model, EH2_stc_model
 # CONFIGURATION
 # =====================================================================
 
-ROOT = Path(r"C:\Users\Miriam Ucendo\Documents\UNI\5\TFG_mates\1605136_BSc_Math\data")
-
-historical_file = ROOT / "processed" / "historical_data.csv"
-scenarios_file  = ROOT / "processed" / "scenarios_12.csv"
-params_file     = ROOT / "processed" / "params.xlsx"
+historical_file = ROOT / "data" / "processed" / "historical_data.csv"
+scenarios_file  = ROOT / / "data" / "processed" / "scenarios_12.csv"
+params_file     = ROOT / / "data" / "processed" / "params.xlsx"
 
 # Day to optimise
 study_day = "2026-05-20"

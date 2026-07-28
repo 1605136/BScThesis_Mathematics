@@ -1,0 +1,151 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jul 22 22:52:00 2026
+
+@author: Miriam_Ucendo
+@filename: plot_k_sweep
+"""
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# ─── COLORES ────────────────────────────────────────────────────────
+Azul     = "#1F4E79"   # Azul marino
+Naranja  = "#D55E00"   # Naranja oscuro
+Verde    = "#2A9D8F"   # Verde petróleo
+Morado   = "#7B2CBF"   # Morado elegante  
+Rojo      = "#C44E52"   # Brick red
+
+# =====================================================
+# DATA
+# =====================================================
+
+df = pd.DataFrame({
+
+    "k": [4, 6, 8, 10, 12, 24, 48],
+
+    "RMSE_price": [0.113213, 0.098926, 0.088617, 0.085907, 0.084847, 0.066921, 0.054420],
+    "RMSE_wind":  [0.113535, 0.108683, 0.105574, 0.097834, 0.087115, 0.076571, 0.052973],
+
+    "EVPI": [11262.98, 13361.41, 16139.89, 15334.19, 15488.80, 15584.24, 15430.55],
+    "VSS":  [4370.06, 3802.90, 3949.62, 4007.45, 3318.05, 4249.43, 4710.27],
+
+    "RP": [112742.96, 115825.29, 120892.55, 117902.72,
+           117984.62, 118997.16, 119384.59]
+
+})
+
+# =============================================================================
+# MATPLOTLIB STYLE
+# =============================================================================
+
+plt.rcParams.update({
+
+    "figure.facecolor": "white",
+    "axes.facecolor": "white",
+
+    "font.family": "Arial",
+
+    "axes.titlesize": 20,
+    "axes.titleweight": "bold",
+
+    "axes.labelsize": 18,
+
+    "xtick.labelsize": 15,
+    "ytick.labelsize": 15,
+
+    "legend.fontsize": 18,
+
+    "axes.edgecolor": "#555555",
+    "axes.linewidth": 0.8
+
+})
+
+
+# =====================================================
+# FIGURE
+# =====================================================
+
+fig, ax = plt.subplots(1, 3, figsize=(15,5))
+
+# -----------------------------------------------------
+# RMSE
+# -----------------------------------------------------
+
+ax[0].plot(
+    df["k"],
+    df["RMSE_price"],
+    marker="o",
+    linewidth=2,
+    label="Price",
+    color=Azul
+)
+
+ax[0].plot(
+    df["k"],
+    df["RMSE_wind"],
+    marker="s",
+    linewidth=2,
+    label="Wind",
+    color=Naranja
+)
+
+
+ax[0].set_xlabel("Number of representative scenarios")
+ax[0].set_ylabel("RMSE")
+
+ax[0].grid(alpha=.3)
+
+ax[0].legend()
+
+# -----------------------------------------------------
+# EVPI + VSS
+# -----------------------------------------------------
+
+ax[1].plot(
+    df["k"],
+    df["EVPI"],
+    marker="o",
+    linewidth=2,
+    label="EVPI",
+    color=Azul
+)
+
+ax[1].plot(
+    df["k"],
+    df["VSS"],
+    marker="s",
+    linewidth=2,
+    label="VSS",
+    color=Naranja
+)
+
+
+ax[1].set_xlabel("Number of representative scenarios")
+ax[1].set_ylabel("€")
+
+ax[1].grid(alpha=.3)
+
+ax[1].legend()
+
+# -----------------------------------------------------
+# RP
+# -----------------------------------------------------
+
+ax[2].plot(
+    df["k"],
+    df["RP"],
+    marker="o",
+    linewidth=2,
+    color=Azul
+)
+
+
+ax[2].set_xlabel("Number of representative scenarios")
+ax[2].set_ylabel("Objective value (€)")
+
+ax[2].grid(alpha=.3)
+
+plt.tight_layout()
+
+plt.show()

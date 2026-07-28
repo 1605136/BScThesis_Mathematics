@@ -55,21 +55,7 @@ The scripts in this directory are the main entry points for reproducing the opti
 
 ## User-configurable parameters
 
-Before executing any script, the user may modify the following parameters.
-
-### Repository path
-
-Specify the location of the script on your computer:
-
-```python
-ROOT = Path(r"C:\Users\Username\Documents\BScThesis_Mathematics\run\EH1_run.py").resolve().parents[1]
-```
-
-Replace the path with the location of the corresponding script on your machine.
-
-### Study day
-
-Select the day to be analysed:
+Before executing a script, the user may select the study day:
 
 ```python
 study_day = "2026-05-20"

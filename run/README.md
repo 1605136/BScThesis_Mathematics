@@ -38,6 +38,17 @@ Generated files include:
 - First-stage and second-stage decision variables.
 - Scenario-dependent results for stochastic models.
 
+The generated Excel files follow the naming convention:
+
+```text
+*_results_{study_day}.xlsx
+```
+
+where:
+
+- `*` identifies the corresponding Energy Hub model (e.g., `EH1`, `EH2`, `EH3`, `EH1_stc`, `EH2_stc`, etc.).
+- `{study_day}` is the selected study day in the format `YYYY-MM-DD`.
+
 ## Notes
 
 The scripts in this directory are the main entry points for reproducing the optimization experiments presented in the thesis. The mathematical formulation of the models is implemented separately in `src/models.py`.

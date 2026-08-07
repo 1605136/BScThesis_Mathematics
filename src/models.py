@@ -11,6 +11,8 @@ import pyomo.environ as pyo
 
 eps = 1
 
+## preliminar models ##
+
 ###############################################################################
 ######  WITHOUT ESS   #########################################################
 ###############################################################################
@@ -961,8 +963,10 @@ def EH3_EHP_stc_model(time_periods, SCENARIOS, PROB, p, data, lambda_today, E_RE
     
     return model
 
+
+## actually used models ##
 ###############################################################################
-######  ENERGY HUB 1 PERFECTI INFO OF EVERYTHING ##############################
+######  ENERGY HUB 1    ##############################
 ###############################################################################
 
 def EH1_model(time_periods, p, DATA, study_day, scenario_day):
@@ -972,9 +976,6 @@ def EH1_model(time_periods, p, DATA, study_day, scenario_day):
     # =====================================================================
 
     model = pyo.ConcreteModel(name="Full_Energy_Hub")
-
-    # Dual variables
-    model.dual = pyo.Suffix(direction=pyo.Suffix.IMPORT)
 
     # =====================================================================
     # SETS
@@ -1140,9 +1141,6 @@ def EH1_stc_model(time_periods, SCENARIOS, PROB, p, DATA, study_day, scenario_da
     # =====================================================================
 
     model = pyo.ConcreteModel(name="Stochastic_Energy_Hub")
-
-    # Dual variables
-    model.dual = pyo.Suffix(direction=pyo.Suffix.IMPORT)
 
     # =====================================================================
     # SETS
@@ -1368,7 +1366,7 @@ def EH1_stc_model(time_periods, SCENARIOS, PROB, p, DATA, study_day, scenario_da
     return model
 
 ###############################################################################
-######  ENERGY HUB 2 PERFECTI INFO OF EVERYTHING ##############################
+######  ENERGY HUB 2    ##############################
 ###############################################################################
 
 def EH2_model(time_periods, p, DATA, study_day, scenario_day):
@@ -1378,9 +1376,6 @@ def EH2_model(time_periods, p, DATA, study_day, scenario_day):
     # =====================================================================
 
     model = pyo.ConcreteModel(name="Energy_Hub2")
-
-    # Dual variables
-    model.dual = pyo.Suffix(direction=pyo.Suffix.IMPORT)
 
     # =====================================================================
     # SETS
@@ -1631,9 +1626,6 @@ def EH2_stc_model(time_periods, SCENARIOS, PROB, p, DATA, study_day, scenario_da
 
     model = pyo.ConcreteModel(name="Stochastic_Energy_Hub_with_ESS")
 
-    # Dual variables
-    model.dual = pyo.Suffix(direction=pyo.Suffix.IMPORT)
-
     # =====================================================================
     # SETS
     # =====================================================================
@@ -1749,7 +1741,6 @@ def EH2_stc_model(time_periods, SCENARIOS, PROB, p, DATA, study_day, scenario_da
     )
 
     model.I_ch = pyo.Var(model.T, model.S, domain=pyo.Binary)
-    model.I_dch = pyo.Var(model.T, model.S, domain=pyo.Binary)
 
     model.G1 = pyo.Var(model.T, model.S, domain=pyo.NonNegativeReals)
     model.G2 = pyo.Var(model.T, model.S, domain=pyo.NonNegativeReals)
@@ -1845,18 +1836,13 @@ def EH2_stc_model(time_periods, SCENARIOS, PROB, p, DATA, study_day, scenario_da
     
     # Battery discharging lower limit
     def eq_f_lower(m, t, s):
-        return m.E_min_d * m.I_dch[t, s] <= m.E_d[t, s]
+        return m.E_min_d * (1 - m.I_ch[t, s]) <= m.E_d[t, s]
     model.eq_f_lower = pyo.Constraint(model.T, model.S, rule=eq_f_lower)
     
     # Battery discharging upper limit
     def eq_f_upper(m, t, s):
-        return m.E_d[t, s] <= m.E_max_d * m.I_dch[t, s]
+        return m.E_d[t, s] <= m.E_max_d * (1 - m.I_ch[t, s])
     model.eq_f_upper = pyo.Constraint(model.T, model.S, rule=eq_f_upper)
-    
-    # Battery simultaneous charge/discharge exclusion
-    def eq_g(m, t, s):
-        return m.I_ch[t, s] + m.I_dch[t, s] <= 1
-    model.eq_g = pyo.Constraint(model.T, model.S, rule=eq_g)
     
     # Gas input split
     def eq_h(m, t, s):
@@ -1913,7 +1899,7 @@ def EH2_stc_model(time_periods, SCENARIOS, PROB, p, DATA, study_day, scenario_da
     return model
     
 ###############################################################################
-######  ENERGY HUB 3 PERFECTI INFO OF EVERYTHING ##############################
+######  ENERGY HUB 3    ##############################
 ###############################################################################
 
 def EH3_model(time_periods, p, DATA, study_day, scenario_day):
@@ -1923,9 +1909,6 @@ def EH3_model(time_periods, p, DATA, study_day, scenario_day):
     # =====================================================================
     
     model = pyo.ConcreteModel(name="Full_Energy_Hub_with_ESS_EHP")
-    
-    # Dual variables
-    model.dual = pyo.Suffix(direction=pyo.Suffix.IMPORT)
     
     # =====================================================================
     # SETS
@@ -2250,9 +2233,6 @@ def EH3_stc_model(time_periods, SCENARIOS, PROB, p, DATA, study_day, scenario_da
 
     model = pyo.ConcreteModel(name="Stochastic_Energy_Hub_EHP")
 
-    # Dual variables
-    model.dual = pyo.Suffix(direction=pyo.Suffix.IMPORT)
-
     # =====================================================================
     # SETS
     # =====================================================================
@@ -2380,7 +2360,6 @@ def EH3_stc_model(time_periods, SCENARIOS, PROB, p, DATA, study_day, scenario_da
     )
     
     model.I_ch = pyo.Var(model.T, model.S, domain=pyo.Binary)
-    model.I_dch = pyo.Var(model.T, model.S, domain=pyo.Binary)
     
     # Gas
     
@@ -2400,7 +2379,6 @@ def EH3_stc_model(time_periods, SCENARIOS, PROB, p, DATA, study_day, scenario_da
     model.C_EHP = pyo.Var(model.T, model.S, domain=pyo.NonNegativeReals)
     
     model.I_h = pyo.Var(model.T, model.S, domain=pyo.Binary)
-    model.I_c = pyo.Var(model.T, model.S, domain=pyo.Binary)
         
     # =====================================================================
     # OBJECTIVE
@@ -2501,24 +2479,18 @@ def EH3_stc_model(time_periods, SCENARIOS, PROB, p, DATA, study_day, scenario_da
     
     # Battery discharging lower limit
     def eq_g_lower(m, t, s):
-        return m.E_min_d * m.I_dch[t, s] <= m.E_d[t, s]
+        return m.E_min_d * ( 1 - m.I_ch[t, s] ) <= m.E_d[t, s]
     
     model.eq_g_lower = pyo.Constraint(model.T, model.S, rule=eq_g_lower)
     
     # Battery discharging upper limit
     
     def eq_g_upper(m, t, s):
-        return m.E_d[t, s] <= m.E_max_d * m.I_dch[t, s]
+        return m.E_d[t, s] <= m.E_max_d * ( 1 - m.I_ch[t, s] )
     
     model.eq_g_upper = pyo.Constraint(model.T, model.S, rule=eq_g_upper)
     
-    # Battery simultaneous charge/discharge exclusion
-    
-    def eq_i(m, t, s):
-        return m.I_ch[t, s] + m.I_dch[t, s] <= 1
-    
-    model.eq_i = pyo.Constraint(model.T, model.S, rule=eq_i)
-    
+
     # Gas balance
     
     def eq_j(m, t, s):
@@ -2594,24 +2566,17 @@ def EH3_stc_model(time_periods, SCENARIOS, PROB, p, DATA, study_day, scenario_da
     # EHP cooling lower limit
     
     def eq_p_lower(m, t, s):
-        return m.C_EHP_min * m.I_c[t, s] <= m.C_EHP[t, s]
+        return m.C_EHP_min * (1-m.I_h[t, s]) <= m.C_EHP[t, s]
     
     model.eq_p_lower = pyo.Constraint(model.T, model.S, rule=eq_p_lower)
     
     # EHP cooling upper limit
     
     def eq_p_upper(m, t, s):
-        return m.C_EHP[t, s] <= m.C_EHP_max * m.I_c[t, s]
+        return m.C_EHP[t, s] <= m.C_EHP_max * (1-m.I_h[t, s])
     
     model.eq_p_upper = pyo.Constraint(model.T, model.S, rule=eq_p_upper)
-    
-    # EHP cannot heat and cool simultaneously
-    
-    def eq_q(m, t, s):
-        return m.I_h[t, s] + m.I_c[t, s] <= 1
-    
-    model.eq_q = pyo.Constraint(model.T, model.S, rule=eq_q)
-    
+     
     # CHP capacity
     
     def limit_G1(m, t, s):

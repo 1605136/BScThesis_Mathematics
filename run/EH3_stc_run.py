@@ -14,7 +14,7 @@ import pyomo.environ as pyo
 from pathlib import Path
 import sys
 
-ROOT = Path(__file__).resolve().parents[1
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 
@@ -31,7 +31,7 @@ scenarios_file = ROOT / "data" / "processed" / "scenarios_12.csv"
 params_file = ROOT / "data" / "processed" / "params.xlsx"
 
 # Day to optimise
-study_day = "2026-05-21"
+study_day = "2026-05-20"
 study_day = pd.to_datetime(study_day).date()
 
 # Guardar solución óptima
@@ -66,7 +66,7 @@ model = EH3_stc_model(
 # SOLVER
 # =====================================================================
 
-solver = pyo.SolverFactory("glpk")
+solver = pyo.SolverFactory("highs")
 
 start = time.perf_counter()
 result = solver.solve(model, tee=True)
@@ -118,7 +118,6 @@ for s in SCENARIOS:
             "E_d": pyo.value(model.E_d[t, s]),
             "SOC": pyo.value(model.SOC[t, s]),
             "I_ch": pyo.value(model.I_ch[t, s]),
-            "I_dch": pyo.value(model.I_dch[t, s]),
 
             # Gas
             "G": pyo.value(model.G[t]),
@@ -133,7 +132,6 @@ for s in SCENARIOS:
             "H_EHP": pyo.value(model.H_EHP[t, s]),
             "C_EHP": pyo.value(model.C_EHP[t, s]),
             "I_h": pyo.value(model.I_h[t, s]),
-            "I_c": pyo.value(model.I_c[t, s]),
 
         })
 

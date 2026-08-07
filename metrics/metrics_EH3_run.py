@@ -29,15 +29,15 @@ from src.models import EH3_model, EH3_stc_model
 # =====================================================================
 
 historical_file = ROOT / "data" / "processed" / "historical_data.csv"
-scenarios_file  = ROOT / / "data" / "processed" / "scenarios_12.csv"
-params_file     = ROOT / / "data" / "processed" / "params.xlsx"
+scenarios_file  = ROOT / "data" / "processed" / "scenarios_12.csv"
+params_file     = ROOT / "data" / "processed" / "params.xlsx"
 
 # Day to optimise
 study_day = "2026-05-20"
 study_day = pd.to_datetime(study_day).date()
 
 # Solver set
-solver = pyo.SolverFactory("glpk")
+solver = pyo.SolverFactory("highs")
 
 # =====================================================================
 # LOAD DATA
